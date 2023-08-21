@@ -32,11 +32,11 @@ const Home: React.FC = () => {
     dispatch(setCurrentPage(num));
   };
   const onChangeCategory = useCallback((id: number) => {
-    dispatch(setCategory(id))
-  }, [])
+    dispatch(setCategory(id));
+  }, []);
   const onChangeSort = (obj: Sort) => {
-    dispatch(setSort(obj))
-  }
+    dispatch(setSort(obj));
+  };
 
   const getPizzas = async () => {
     const category = categoryId ? `category=${categoryId}` : '';
@@ -88,14 +88,13 @@ const Home: React.FC = () => {
     isSearch.current = false;
   }, [categoryId, sortType, searchValue, currentPage]);
 
-  const pizza = pizzaItems
-    .map((item) => <PizzaBlock key={item.id} {...item} />);
+  const pizza = pizzaItems.map((item) => <PizzaBlock key={item.id} {...item} />);
   const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
   return (
     <>
       <div className="content__top">
-        <Categories value={categoryId} onChangeCategory={(id) => onChangeCategory(id)}/>
-        <SortPopup value={sort} onChangeSort={(obj) => onChangeSort(obj)}/>
+        <Categories value={categoryId} onChangeCategory={(id) => onChangeCategory(id)} />
+        <SortPopup value={sort} onChangeSort={(obj) => onChangeSort(obj)} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (
