@@ -11,6 +11,9 @@ body {
     padding: 20px 0;
   }
 }
+.no-scroll {
+  overflow: hidden;
+}
 
 
 .wrapper {
@@ -97,6 +100,105 @@ body {
 
       .content__title {
         margin-bottom: 20px;
+      }
+    }
+  }
+  &__popup {
+    z-index: 11;
+    background-color: rgba(255, 255, 255, 0.719);
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    &-total {
+      font-family: 'Nunito' sans-serif;
+      font-weight: 900;
+      color: $orange;
+      font-size: 24px;
+      padding-left: 5px;
+    }
+    &-btn {
+      margin-bottom: 40px;
+    }
+    &-btn:disabled {
+      background-color: #fe5d1e8c;
+      &:hover {
+        background-color: #fe5d1e8c;
+      }
+      &:active {
+        transform: none;
+      }
+    }
+    p {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+    &-content {
+      position: relative;
+      background-color: #fff;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 20px 64px 8px;
+      border-radius: 15px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0px 30px;
+      height: 600px;
+      margin: 150px auto;
+      width: 400px;
+      &--close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        width: 32px;
+      }
+      h2 {
+        padding-top: 40px;
+      }
+      h3 {
+        padding: 20px 0;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        input {
+          margin-bottom: 5px;
+          padding: 13px;
+          font-size: 17px;
+          border: none;
+          border-bottom: 1px solid rgba($orange, .6);
+        }
+      }
+    }
+    &-list {
+      height: 130px;
+      overflow-x: hidden;
+      &::-webkit-scrollbar {
+        width: 12px;
+      }
+    
+      &::-webkit-scrollbar-track {
+        background: #ffffff;
+      }
+    
+      &::-webkit-scrollbar-thumb {
+        background-color: $orange;
+        border-radius: 10px;
+        border: 3px solid #ffffff;
+      }
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+        
+      }
+      img {
+        width: 32px;
       }
     }
   }

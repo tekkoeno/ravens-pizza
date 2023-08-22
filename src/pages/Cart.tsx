@@ -3,14 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import closeSvg from '../assets/img/close.svg';
 import { CartEmpty, CartItem } from '../components';
-import CartSuccess from '../components/CartSuccess';
+import img from './../assets/img/success.svg';
 import { selectCart } from '../redux/slices/cart/selectors';
 import { clearItem } from '../redux/slices/cart/slice';
+import CartSuccess from '../components/CartSuccess';
 
 const Cart = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [orderSent, setOrderSet] = useState(false);
+  const [orderSent, setOrderSent] = useState(false);
   const [valueName, setValueName] = useState('');
   const [valueAdress, setValueAdress] = useState('');
   const [valuePhone, setValuePhone] = useState('');
@@ -29,6 +30,9 @@ const Cart = () => {
   const onClickPopup = () => {
     setOpen(true);
     document.body.classList.add('no-scroll');
+  };
+  const onClickOrder = () => {
+    setOrderSent(true);
   };
   useEffect(() => {
     document.body.classList.remove('no-scroll');
@@ -98,10 +102,9 @@ const Cart = () => {
             <button
               disabled={valueName === '' || valueAdress === '' || valuePhone === ''}
               className="cart__popup-btn button pay-btn"
-              onClick={() => setOrderSet(true)}>
+              onClick={onClickOrder}>
               <span>Заказать</span>
             </button>
-            <p className="cart__popup-error"></p>
           </div>
         </div>
       )}
