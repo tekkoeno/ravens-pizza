@@ -3,37 +3,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectCartItemById } from '../../redux/slices/cart/selectors';
 import { addItem } from '../../redux/slices/cart/slice';
+import { CartItem } from '../../redux/slices/cart/types';
 
-type ItemsType = {
-  id: string;
-  name: string;
-  imageUrl: string;
-  sizes: number[];
-  types: number[];
-  price: number;
-  count: number;
-};
 const typesName = ['тонкое', 'традиционное'];
-const PizzaBlock: React.FC<ItemsType> = ({ id, name, imageUrl, sizes, types, price, count }) => {
+const PizzaBlock: React.FC<CartItem> = ({ id, name, price, imageUrl, sizes, types, count }) => {
   const CartItem = useSelector(selectCartItemById(id));
   const [activeType, setActiveType] = useState(0);
-  const [activeSize, setActiveSize] = useState(0);
+  const [activeSize, setActiveSize] = useState(26);
   const addedCount = CartItem ? CartItem.count : 0;
   const dispatch = useDispatch();
-
   const onClickAddToCart = () => {
     const item = {
       id,
       name,
-      imageUrl,
-      sizes: sizes[activeSize],
-      types: typesName[activeType],
       price,
+      imageUrl,
+      sizes: activeSize,
+      types: typesName[activeType],
       count,
     };
     dispatch(addItem(item));
   };
-
   return (
     <div className="pizza-block">
       <Link to={'/pizza/' + id}>
@@ -46,21 +36,21 @@ const PizzaBlock: React.FC<ItemsType> = ({ id, name, imageUrl, sizes, types, pri
             return (
               <li
                 key={typeId}
-                className={typeId === activeType ? 'active' : ''}
-                onClick={() => setActiveType(typeId)}>
+                onClick={() => setActiveType(typeId)}
+                className={activeType === typeId ? 'active' : ''}>
                 {typesName[typeId]}
               </li>
             );
           })}
         </ul>
         <ul>
-          {sizes.map((size, id) => {
+          {sizes.map((sizeId) => {
             return (
               <li
-                key={id}
-                onClick={() => setActiveSize(id)}
-                className={activeSize === id ? 'active' : ''}>
-                {size} см
+                key={sizeId}
+                onClick={() => setActiveSize(sizeId)}
+                className={sizeId === activeSize ? 'active' : ''}>
+                {sizeId} см
               </li>
             );
           })}
