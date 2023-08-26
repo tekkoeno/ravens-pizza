@@ -121,10 +121,14 @@ body {
       padding-left: 5px;
     }
     &-btn {
+      font-size: 20px;
+      width: 280px;
+      margin: 0 auto;
       margin-bottom: 40px;
     }
     &-btn:disabled {
       background-color: #fe5d1e8c;
+      cursor: default;
       &:hover {
         background-color: #fe5d1e8c;
       }
@@ -151,6 +155,7 @@ body {
       margin: 150px auto;
       width: 400px;
       &--close {
+        cursor: pointer;
         position: absolute;
         top: 10px;
         right: 15px;
@@ -360,6 +365,12 @@ body {
           path:first-of-type {
             display: none;
           }
+        }
+        &:disabled {
+          cursor: default;
+          opacity: .6;
+          color: $orange;
+          pointer-events: none;
         }
       }
     }

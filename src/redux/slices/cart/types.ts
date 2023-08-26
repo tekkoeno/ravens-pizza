@@ -2,12 +2,12 @@ export type CartItem = {
     id: string,
     name: string,
     price: number,
-    count: number,
     imageUrl: string,
     types: number[],
     sizes: number[],
+    count: number
 }
-export interface CartSliceItem {
+export interface CartItemSlice {
     items: CartItem[],
     totalPrice: number,
 }

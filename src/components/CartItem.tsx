@@ -1,32 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCart } from '../redux/slices/cart/selectors';
+import { useDispatch } from 'react-redux';
 import { addItem, minusItem, removeItem } from '../redux/slices/cart/slice';
+import { CartItem as CartItemProps } from '../redux/slices/cart/types';
 
-type CartItemType = {
-  id: string;
-  name: string;
-  imageUrl: string;
-  sizes: number[];
-  types: number[];
-  price: number;
-  count: number;
-};
-
-const CartItem: React.FC<CartItemType> = ({ id, name, price, imageUrl, types, sizes, count }) => {
-  const { totalPrice } = useSelector(selectCart);
+const CartItem: React.FC<CartItemProps> = ({ id, name, price, imageUrl, types, sizes, count }) => {
   const dispatch = useDispatch();
-  const onClickRemove = (id: string) => {
-    dispatch(removeItem(id));
-  };
-  const onClickMinus = () => {
+  const onClickMinus = (id: string) => {
     dispatch(minusItem(id));
   };
-  const onClickPlus = () => {
-    dispatch(
-      addItem({
-        id,
-      }),
-    );
+  const onClickPlus = (id: string) => {
+    dispatch(addItem({ id }));
+  };
+  const onClickRemove = (id) => {
+    dispatch(removeItem(id));
   };
   return (
     <div className="cart__item">
@@ -41,9 +26,9 @@ const CartItem: React.FC<CartItemType> = ({ id, name, price, imageUrl, types, si
       </div>
       <div className="cart__item-count">
         <button
-          onClick={onClickMinus}
+          disabled={count === 1}
           className="button button--outline button--circle cart__item-count-minus"
-          disabled={count === 1}>
+          onClick={() => onClickMinus(id)}>
           <svg
             width="10"
             height="10"
@@ -63,7 +48,7 @@ const CartItem: React.FC<CartItemType> = ({ id, name, price, imageUrl, types, si
         <b>{count}</b>
         <button
           className="button button--outline button--circle cart__item-count-plus"
-          onClick={onClickPlus}>
+          onClick={() => onClickPlus(id)}>
           <svg
             width="10"
             height="10"
