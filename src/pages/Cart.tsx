@@ -3,37 +3,46 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import closeSvg from '../assets/img/close.svg';
 import { CartEmpty, CartItem } from '../components';
-import CartSuccess from '../components/CartSuccess';
 import { selectCart } from '../redux/slices/cart/selectors';
 import { clearItem } from '../redux/slices/cart/slice';
 import emptyCartImg from '../assets/img/empty-cart.png';
 const Cart = () => {
   const dispatch = useDispatch();
   const { items, totalPrice } = useSelector(selectCart);
+  const totalCount = items.reduce((obj, sum) => obj + sum.count, 0);
+
   const [valueName, setValueName] = useState('');
   const [valueAdress, setValueAdress] = useState('');
   const [valuePhone, setValuePhone] = useState('');
   const [orderSend, setOrderSend] = useState(false);
   const [open, setOpen] = useState(false);
-  const totalCount = items.reduce((obj, sum) => obj + sum.count, 0);
+
   const onClickClear = () => {
     if (window.confirm('Вы желаете очистить корзинку?')) {
       dispatch(clearItem());
     }
   };
-  const onClickOpen = () => {
+  const onClickSend = () => {
     setOrderSend(true);
     setOpen(false);
     dispatch(clearItem());
+    document.body.classList.remove('no-scroll');
   };
-
+  const onClickOpen = () => {
+    setOpen(true);
+    document.body.classList.add('no-scroll');
+  };
+  const onClickClose = () => {
+    setOpen(false);
+    document.body.classList.remove('no-scroll');
+  };
   return (
     <>
       {open && (
         <div className="cart__popup">
           <div className="cart__popup-content">
             <img
-              onClick={() => setOpen(false)}
+              onClick={onClickClose}
               className="cart__popup-content--close"
               src={closeSvg}
               alt="close"
@@ -75,11 +84,11 @@ const Cart = () => {
               />
             </form>
             <p>
-              Итого: <span className="cart__popup-total">395 cом</span>
+              Итого: <span className="cart__popup-total">{totalPrice} cом</span>
             </p>
             <button
               className="cart__popup-btn button pay-btn"
-              onClick={onClickOpen}
+              onClick={onClickSend}
               disabled={!valueName || !valueAdress || !valuePhone}>
               <span>Заказать</span>
             </button>
@@ -209,7 +218,7 @@ const Cart = () => {
 
                         <span>Вернуться назад</span>
                       </Link>
-                      <button className="button pay-btn" onClick={() => setOpen(true)}>
+                      <button className="button pay-btn" onClick={onClickOpen}>
                         <span>Оплатить сейчас</span>
                       </button>
                     </div>
